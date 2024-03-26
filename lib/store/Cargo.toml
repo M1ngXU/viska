@@ -1,16 +1,26 @@
 [package]
 name = "store"
 version = "0.1.0"
-authors = ["Filippos Vasilakis <vasilakisfil@gmail.com>"]
-edition = "2018"
+authors = [
+    "Filippos Vasilakis <vasilakisfil@gmail.com>",
+    "Ming Xu <91617361+M1ngXU@users.noreply.github.com>",
+]
+edition = "2021"
 
 [dependencies]
-diesel = { git = "https://github.com/diesel-rs/diesel", features = ["postgres", "chrono", "numeric", "uuid", "r2d2", "network-address"] }
+diesel = { git = "https://github.com/diesel-rs/diesel", features = [
+    "postgres",
+    "chrono",
+    "numeric",
+    "uuid",
+    "r2d2",
+    "network-address",
+] }
 r2d2 = "0.8.9"
 #diesel_logger = { git = "https://github.com/vasilakisfil/diesel-logger", branch = "feat/2.0-diesel" }
 
 
-once_cell = {version = "1.4.0" }
+once_cell = { version = "1.4.0" }
 
 common = { path = "../../common" }
 models = { path = "../models" }

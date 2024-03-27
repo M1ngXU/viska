@@ -23,7 +23,7 @@ store = { path = "lib/store" }
 fake = { version = "2.2.3", features = ['derive'] }
 #rand = "0.7.2"
 #jsonschema-valid = "0.2.0"
-diesel = { git = "https://github.com/diesel-rs/diesel", features = [
+diesel = { git = "https://github.com/diesel-rs/diesel", rev = "6827dba6d7ff404eb2ef76bbd8ee44aa571993e7", features = [
   "postgres",
   "chrono",
   "numeric",

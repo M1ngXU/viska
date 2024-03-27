@@ -1,11 +1,11 @@
-fn main() {}
+// fn main() {}
 
 //TODO: this should be moved in a different/outside crate
-/*
+
 use sip_server::{
     transaction::Transaction,
     transport::Transport,
-    tu::elements::{Capabilities, Registrar, UserAgent},
+    tu::elements::{Capabilities, Registrar},
 };
 
 #[tokio::main]
@@ -14,16 +14,16 @@ async fn main() {
     let _ = common::Config::default();
 
     let (handlers, receivers) = models::channels_builder();
-    let _ = UserAgent::new(
-        handlers.clone(),
-        receivers.tu,
-        Registrar::new(handlers.clone()),
-        Capabilities::new(handlers.clone()),
-    );
+    // let _ = UserAgent::new(
+    //     handlers.clone(),
+    //     receivers.tu,
+    //     Registrar::new(handlers.clone()),
+    //     Capabilities::new(handlers.clone()),
+    // );
 
     let _ = Transaction::new(handlers.clone(), receivers.transaction);
 
-    let _ = Transport::new(handlers.clone(), receivers.transport);
+    // let _ = Transport::new(handlers.clone(), receivers.transport);
 
     tokio::spawn(async move {
         loop {
@@ -33,4 +33,3 @@ async fn main() {
     .await
     .expect("sleeping");
 }
-*/

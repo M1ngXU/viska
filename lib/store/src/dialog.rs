@@ -94,11 +94,11 @@ impl LazyQuery {
     }
 
     pub async fn load(self) -> Result<Vec<Dialog>, Error> {
-        Ok(self.query.get_results(&db_conn()?)?)
+        Ok(self.query.get_results(&mut db_conn()?)?)
     }
 
     pub async fn first(self) -> Result<Dialog, Error> {
-        Ok(self.query.first(&db_conn()?)?)
+        Ok(self.query.first(&mut db_conn()?)?)
     }
 }
 
@@ -150,7 +150,7 @@ impl LazyQueryWithTransactions {
     pub fn load(self) -> Result<Vec<DialogWithTransaction>, Error> {
         Ok(self
             .query
-            .get_results(&db_conn()?)?
+            .get_results(&mut db_conn()?)?
             .into_iter()
             .map(|s: (Dialog, Transaction)| s.into())
             .collect())
@@ -159,7 +159,7 @@ impl LazyQueryWithTransactions {
     pub fn first(self) -> Result<DialogWithTransaction, Error> {
         Ok(self
             .query
-            .first::<(Dialog, Transaction)>(&db_conn()?)?
+            .first::<(Dialog, Transaction)>(&mut db_conn()?)?
             .into())
     }
 }
@@ -182,7 +182,7 @@ impl Dialog {
     }
 
     pub fn find(id: i64) -> Result<Self, Error> {
-        Ok(dialogs::table.find(id).first::<Self>(&db_conn()?)?)
+        Ok(dialogs::table.find(id).first::<Self>(&mut db_conn()?)?)
     }
 
     pub fn find_with_transaction(computed_id: String) -> Result<DialogWithTransaction, Error> {
@@ -205,7 +205,7 @@ impl Dialog {
 
         Ok(insert_into(dialogs::table)
             .values(record.into())
-            .get_result(&db_conn()?)?)
+            .get_result(&mut db_conn()?)?)
     }
 
     pub fn create_with_transaction(
@@ -236,11 +236,11 @@ impl Dialog {
     pub fn update(record: impl Into<DirtyDialog>, id: i64) -> Result<Self, Error> {
         Ok(diesel::update(dialogs::table.filter(dialogs::id.eq(id)))
             .set(&record.into())
-            .get_result(&db_conn()?)?)
+            .get_result(&mut db_conn()?)?)
     }
 
     pub fn delete(id: i64) -> Result<Self, Error> {
-        Ok(diesel::delete(dialogs::table.filter(dialogs::id.eq(id))).get_result(&db_conn()?)?)
+        Ok(diesel::delete(dialogs::table.filter(dialogs::id.eq(id))).get_result(&mut db_conn()?)?)
     }
 }
 

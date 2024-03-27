@@ -35,7 +35,7 @@ impl RandomizedBuilder for IpAddrBuilder {
             IpVersion::V4 => {
                 if self.multicast {
                     let mut rng = thread_rng();
-                    Self::Item::V4(Ipv4Addr::new(224, 0, 0, rng.gen_range(1, 254)))
+                    Self::Item::V4(Ipv4Addr::new(224, 0, 0, rng.gen_range(1..254)))
                 } else {
                     Self::Item::V4(IPv4(EN).fake())
                 }

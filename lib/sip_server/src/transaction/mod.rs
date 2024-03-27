@@ -96,7 +96,7 @@ impl Inner {
         msg: rsip::SipMessage,
         reason: String,
     ) -> Result<(), Error> {
-        let transaction_id = msg.transaction_id()?.expect("transaction_id");
+        let transaction_id = msg.transaction_id().expect("transaction_id");
         if let Some(sm) = self.state.read().await.get(&transaction_id) {
             sm.transport_error(reason).await;
 
@@ -146,7 +146,7 @@ impl Inner {
     }
 
     async fn process_tu_reply(&self, response: rsip::Response) -> Result<(), Error> {
-        let transaction_id = response.transaction_id()?.expect("transaction_id");
+        let transaction_id = response.transaction_id().expect("transaction_id");
 
         match self.state.read().await.get(&transaction_id) {
             Some(sm) => Ok(sm.uas_process_tu_reply(response).await?),
@@ -166,7 +166,7 @@ impl Inner {
     }
 
     async fn process_incoming_request(&self, request: rsip::Request) -> Result<(), Error> {
-        let transaction_id = request.transaction_id()?.expect("transaction_id");
+        let transaction_id = request.transaction_id().expect("transaction_id");
 
         match self.state.read().await.get(&transaction_id) {
             Some(sm) => Ok(sm.uas_process_request(request).await?),
@@ -175,7 +175,7 @@ impl Inner {
     }
 
     async fn process_incoming_response(&self, response: rsip::Response) -> Result<(), Error> {
-        let transaction_id = response.transaction_id()?.expect("transaction_id");
+        let transaction_id = response.transaction_id().expect("transaction_id");
 
         match self.state.read().await.get(&transaction_id) {
             Some(sm) => Ok(sm.uac_process_response(response).await?),

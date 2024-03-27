@@ -67,7 +67,7 @@ impl TrxStateMachine {
         use models::rsip_ext::*;
 
         Ok(Self {
-            id: request.transaction_id()?.expect("transaction_id"),
+            id: request.transaction_id().expect("transaction_id"),
             state: TrxState::Proceeding(Default::default()),
             response: response.unwrap_or_else(|| request.provisional_of(100)),
             request,

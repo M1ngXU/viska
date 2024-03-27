@@ -13,7 +13,6 @@ use diesel::{
     sql_types::Text,
 };
 use std::{
-    convert::TryFrom,
     fmt::{self, Debug},
     io::Write,
     net::{IpAddr, Ipv4Addr},
@@ -93,23 +92,25 @@ impl Registration {
     }
 
     pub fn search(filter: SearchFilter) -> Result<Vec<Registration>, Error> {
-        Ok(Self::query_boxed(filter).load::<Registration>(&db_conn()?)?)
+        Ok(Self::query_boxed(filter).load::<Registration>(&mut db_conn()?)?)
     }
 
     pub fn count(filter: SearchFilter) -> Result<i64, Error> {
-        Ok(Self::query_boxed(filter).count().get_result(&db_conn()?)?)
+        Ok(Self::query_boxed(filter)
+            .count()
+            .get_result(&mut db_conn()?)?)
     }
 
     pub fn find_by(filter: SearchFilter) -> Result<Option<Registration>, Error> {
         Ok(Self::query_boxed(filter)
-            .get_result::<Registration>(&db_conn()?)
+            .get_result::<Registration>(&mut db_conn()?)
             .optional()?)
     }
 
     pub fn find(id: i64) -> Result<Registration, Error> {
         Ok(registrations::table
             .filter(registrations::id.eq(id))
-            .get_result::<Registration>(&db_conn()?)?)
+            .get_result::<Registration>(&mut db_conn()?)?)
     }
 
     pub fn create(record: impl Into<DirtyRegistration>) -> Result<Self, Error> {
@@ -117,7 +118,7 @@ impl Registration {
 
         Ok(insert_into(registrations::table)
             .values(record.into())
-            .get_result(&db_conn()?)?)
+            .get_result(&mut db_conn()?)?)
     }
 
     //TODO: fix me by adding proper indexes and using proper ON CONFLICT clauses
@@ -139,21 +140,21 @@ impl Registration {
         Ok(
             diesel::update(registrations::table.filter(registrations::id.eq(id)))
                 .set(&record.into())
-                .get_result(&db_conn()?)?,
+                .get_result(&mut db_conn()?)?,
         )
     }
 
     pub fn delete(id: i64) -> Result<Self, Error> {
         Ok(
             diesel::delete(registrations::table.filter(registrations::id.eq(id)))
-                .get_result(&db_conn()?)?,
+                .get_result(&mut db_conn()?)?,
         )
     }
 
     pub fn delete_by_uri(uri: String) -> Result<Self, Error> {
         Ok(
             diesel::delete(registrations::table.filter(registrations::contact_uri.eq(uri)))
-                .get_result(&db_conn()?)?,
+                .get_result(&mut db_conn()?)?,
         )
     }
 }
@@ -274,7 +275,7 @@ impl TryFrom<rsip::Request> for DirtyRegistration {
             ),
             domain: Some(request.from_header()?.typed()?.uri.host().to_string()),
             contact: Some(contact_header.value().into()),
-            expires: Some(Utc::now() + Duration::seconds(expires)),
+            expires: Some(Utc::now() + Duration::try_seconds(expires).unwrap()),
             call_id: Some(request.call_id_header()?.clone().into()),
             cseq: Some(request.cseq_header()?.typed()?.seq as i32),
             user_agent: Some(request.user_agent_header().unwrap().clone().into()),

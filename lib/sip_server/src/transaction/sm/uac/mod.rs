@@ -54,7 +54,7 @@ impl std::fmt::Display for TrxState {
 impl TrxStateMachine {
     pub fn new(handlers: Handlers, request: rsip::Request) -> Result<Self, Error> {
         Ok(Self {
-            id: request.transaction_id()?.expect("transaction_id"),
+            id: request.transaction_id().expect("transaction_id"),
             state: TrxState::Calling(Default::default()),
             request,
             created_at: Instant::now(),

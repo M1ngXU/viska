@@ -66,7 +66,7 @@ impl DialogSm {
         let me = Self {
             id: request.dialog_id()?,
             call_id: request.call_id_header()?.clone(),
-            transaction_id: request.transaction_id()?.expect("transaction id").into(),
+            transaction_id: request.transaction_id().expect("transaction id").into(),
             local_tag: request
                 .from_header()?
                 .tag()?

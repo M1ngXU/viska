@@ -32,7 +32,6 @@ async fn if_peer_not_alive() {
             .is_uas_errored(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -94,7 +93,6 @@ async fn with_redirect_response_moves_to_completed() {
             .is_uas_completed(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -126,7 +124,6 @@ async fn with_ok_response_moves_to_accepted() {
             .is_uas_accepted(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -154,7 +151,6 @@ async fn multiple_invites_on_completed_resends_response() {
             .is_uas_completed(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -193,7 +189,6 @@ async fn redirect_but_peer_not_responding_with_ack() {
             .is_uas_completed(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -230,7 +225,6 @@ async fn redirect_but_peer_not_responding_with_ack() {
             .is_uas_terminated(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("request transaction id")
                     .into()
             )
@@ -256,7 +250,6 @@ async fn with_ack_moves_to_confirmed() {
             .is_uas_completed(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -279,7 +272,6 @@ async fn with_ack_moves_to_confirmed() {
             .is_uas_confirmed(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -307,7 +299,6 @@ async fn multiple_invites_on_accepted_resends_response() {
             .is_uas_accepted(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -346,7 +337,6 @@ async fn ok_but_peer_not_responding_with_ack() {
             .is_uas_accepted(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -362,7 +352,6 @@ async fn ok_but_peer_not_responding_with_ack() {
             .is_uas_accepted(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("request transaction id")
                     .into()
             )
@@ -377,7 +366,6 @@ async fn ok_but_peer_not_responding_with_ack() {
             .is_uas_terminated(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("request transaction id")
                     .into()
             )
@@ -409,7 +397,6 @@ async fn with_multiple_ok_on_accepted() {
             .is_uas_accepted(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -450,7 +437,6 @@ async fn with_error_on_second_ok_on_accepted() {
             .is_uas_accepted(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -470,7 +456,6 @@ async fn with_error_on_second_ok_on_accepted() {
             .is_uas_accepted(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -491,7 +476,6 @@ async fn with_error_on_second_ok_on_accepted() {
             .is_uas_errored(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -517,7 +501,6 @@ async fn multiple_ack_received_are_forwarded_to_tu() {
             .is_uas_accepted(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -566,7 +549,6 @@ async fn when_confirmed_acks_have_no_effect() {
             .is_uas_confirmed(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -592,7 +574,6 @@ async fn when_confirmed_acks_have_no_effect() {
             .is_uas_confirmed(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -628,7 +609,6 @@ async fn when_confirmed_when_time_i_kicks_in_move_to_terminated() {
             .is_uas_confirmed(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )
@@ -645,7 +625,6 @@ async fn when_confirmed_when_time_i_kicks_in_move_to_terminated() {
             .is_uas_terminated(
                 request
                     .transaction_id()
-                    .unwrap()
                     .expect("response transaction id")
                     .into()
             )

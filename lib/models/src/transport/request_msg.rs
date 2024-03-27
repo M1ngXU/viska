@@ -6,7 +6,6 @@ use crate::{
     Error,
 };
 use common::rsip::{self, prelude::*, Transport};
-use std::convert::{TryFrom, TryInto};
 use std::net::SocketAddr;
 
 //TODO: we probably need better naming here
@@ -27,7 +26,7 @@ impl RequestMsg {
     }
 
     pub fn transaction_id(&self) -> Result<Option<TransactionId>, Error> {
-        Ok(self.sip_request.transaction_id()?)
+        Ok(Some(self.sip_request.transaction_id()?))
     }
 
     pub fn dialog_id(&self) -> Result<DialogId, Error> {

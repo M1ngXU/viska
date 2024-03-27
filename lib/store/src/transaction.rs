@@ -62,11 +62,11 @@ impl<'a> LazyQuery<'a> {
     }
 
     pub fn load(self) -> Result<Vec<Transaction>, Error> {
-        Ok(self.query.get_results(&db_conn()?)?)
+        Ok(self.query.get_results(&mut db_conn()?)?)
     }
 
     pub fn first(self) -> Result<Transaction, Error> {
-        Ok(self.query.first(&db_conn()?)?)
+        Ok(self.query.first(&mut db_conn()?)?)
     }
 }
 
@@ -76,7 +76,9 @@ impl<'a> Transaction {
     }
 
     pub fn find(id: i64) -> Result<Self, Error> {
-        Ok(transactions::table.find(id).first::<Self>(&db_conn()?)?)
+        Ok(transactions::table
+            .find(id)
+            .first::<Self>(&mut db_conn()?)?)
     }
 
     pub fn create(record: impl Into<DirtyTransaction>) -> Result<Self, Error> {
@@ -84,21 +86,21 @@ impl<'a> Transaction {
 
         Ok(insert_into(transactions::table)
             .values(record.into())
-            .get_result(&db_conn()?)?)
+            .get_result(&mut db_conn()?)?)
     }
 
     pub fn update(record: impl Into<DirtyTransaction>, id: i64) -> Result<Self, Error> {
         Ok(
             diesel::update(transactions::table.filter(transactions::id.eq(id)))
                 .set(&record.into())
-                .get_result(&db_conn()?)?,
+                .get_result(&mut db_conn()?)?,
         )
     }
 
     pub fn delete(id: i64) -> Result<Self, Error> {
         Ok(
             diesel::delete(transactions::table.filter(transactions::id.eq(id)))
-                .get_result(&db_conn()?)?,
+                .get_result(&mut db_conn()?)?,
         )
     }
 }
